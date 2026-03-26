@@ -15,6 +15,13 @@ Install dependencies:
 pip install -r requirements.txt
 ```
 
+## Get Helper Script
+
+Either clone this directory, or download the `alcf_facility_api_globus_token.py` file:
+```bash
+wget https://raw.githubusercontent.com/argonne-lcf/alcf-facility-api-token/refs/heads/main/alcf_facility_api_globus_token.py
+```
+
 ## Generate Access Token
 
 Generate the authentication flow URL with the command below. Copy-paste the URL to your browser, authenticate with your ALCF credentials, and copy-paste the resulting authorization code in your terminal.

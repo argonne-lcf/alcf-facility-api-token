@@ -42,9 +42,10 @@ While your access token is valid for 48 hours, the `get_access_token` function w
 
 ## Troubleshooting
 
-* **Permission Denied** (make sure you authenticate with ALCF credentials):
+**Permission Denied** (make sure you authenticate with ALCF credentials):
  * Logout from Globus at [https://app.globus.org/logout](https://app.globus.org/logout)
  * Clear browser cache or use an *incognito* browser
  * Reauthenticate with `python alcf_facility_api_globus_token.py authenticate`
-* **IdentityMismatchError: Detected a change in identity**:
+
+**IdentityMismatchError: Detected a change in identity**:
  * This happens when trying to get an access token using a Globus identity that is not linked to the one you previously used to generate your access tokens. Locate your tokens file (typically at `~/.globus/app/8b84fc2d-49e9-49ea-b54d-b3a29a70cf31/alcf_facility_api_app/tokens.json`), delete it, and restart the authentication process.

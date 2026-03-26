@@ -56,3 +56,17 @@ While your access token is valid for 48 hours, the `get_access_token` function w
 
 **IdentityMismatchError: Detected a change in identity**:
  * This happens when trying to get an access token using a Globus identity that is not linked to the one you previously used to generate your access tokens. Locate your tokens file (typically at `~/.globus/app/8b84fc2d-49e9-49ea-b54d-b3a29a70cf31/alcf_facility_api_app/tokens.json`), delete it, and restart the authentication process.
+
+## Internal Debuggin
+
+For those who own the appropriate Globus Client credentials, you can introspect your token with the `introspect_token.py` script. First, add your credentials in a `.env` file:
+```bash
+GLOBUS_SERVICE_API_CLIENT_ID=....
+GLOBUS_SERVICE_API_CLIENT_SECRET=....
+```
+
+Execute the instrospection script to verify your token for any issue (e.g. `session_info`, `policy_evaluations`):
+```bash
+python introspect_token.py
+```
+

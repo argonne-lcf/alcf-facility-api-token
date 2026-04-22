@@ -308,20 +308,18 @@ print(response.json())
 
 ## Internal Debugging
 
-??? "Token Introspection (For Service Owners)"
+For those who own the appropriate Globus Client credentials, you can introspect your token with the `introspect_token.py` script. First, add your credentials in a `.env` file:
 
-    For those who own the appropriate Globus Client credentials, you can introspect your token with the `introspect_token.py` script. First, add your credentials in a `.env` file:
+```bash
+GLOBUS_SERVICE_API_CLIENT_ID=....
+GLOBUS_SERVICE_API_CLIENT_SECRET=....
+```
 
-    ```bash
-    GLOBUS_SERVICE_API_CLIENT_ID=....
-    GLOBUS_SERVICE_API_CLIENT_SECRET=....
-    ```
+Then execute the introspection script to verify your token for any issues (e.g. `session_info`, `policy_evaluations`):
 
-    Then execute the introspection script to verify your token for any issues (e.g. `session_info`, `policy_evaluations`):
-
-    ```bash
-    python introspect_token.py
-    ```
+```bash
+python introspect_token.py
+```
 
 ## Contact Us
 

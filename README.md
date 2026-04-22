@@ -35,27 +35,26 @@ Generate the authentication flow URL with the command below. Copy-paste the URL 
 python alcf_facility_api_globus_token.py authenticate
 ```
 
-!!! warning "Token Validity"
-    - Access tokens are valid for 48 hours. The `get_access_token` command will automatically refresh your token if it has expired.
-    - Refresh tokens are valid for 7 days, after which you will need to manually reauthenticate with your ALCF credentials.
+The command above generates both an access token and a refresh token, stored at `~/.globus/app/8b84fc2d-49e9-49ea-b54d-b3a29a70cf31/alcf_facility_api_app/tokens.json`.
+
+**Token Validity**: Access tokens are valid for 48 hours. The `get_access_token` command will automatically refresh your token if it has expired. Refresh tokens are valid for 7 days, after which you will need to manually reauthenticate with your ALCF credentials.
 
 ### 4. Retrieve Your Access Token
 
-The command above generates both an access token and a refresh token, stored at `~/.globus/app/8b84fc2d-49e9-49ea-b54d-b3a29a70cf31/alcf_facility_api_app/tokens.json`. You can retrieve your token in several ways:
+You can retrieve your token in several ways:
 
-=== "Bash"
-
+**Bash**:
     ```bash
     python alcf_facility_api_globus_token.py get_access_token
     ```
 
-=== "Environment Variable"
+**Environment variable**:
 
     ```bash
     access_token=$(python alcf_facility_api_globus_token.py get_access_token)
     ```
 
-=== "Python"
+**Python**:
 
     ```python
     from alcf_facility_api_globus_token import get_access_token
@@ -64,7 +63,7 @@ The command above generates both an access token and a refresh token, stored at 
 
 ## API Usage Examples
 
-All examples below use the `requests` library and retrieve the access token via the helper script.
+All examples below use the Python `requests` library and retrieve the access token via the helper script.
 
 ```python
 import requests
@@ -77,137 +76,9 @@ headers = {
 }
 ```
 
-!!! tip "Resource IDs"
-    Each API endpoint targets a specific ALCF resource identified by a UUID. Common resource IDs are:
-
-    | Resource | ID |
-    |----------|----|
-    | Home filesystem | `6115bd2c-957a-4543-abff-5fae52992ff2` |
-    | Eagle filesystem | `1c3ad9d4-2e91-42bc-becb-72b1fde1235c` |
-    | Polaris (compute) | `55c1c993-1124-47f9-b823-514ba3849a9a` |
-    | Edith (compute) | `7f7d0593-162e-43b9-8476-07d7d137d6ab` |
-
-### Filesystem
-
-!!! warning "Asynchronous tasks"
-    - All filesystem operations are asynchronous and will return a task ID. Please see the [Get a Task](#tasks) section for how to retrieve your results.
-
-??? "List Directory Contents"
-
-    Returns the contents of a directory on the specified resource.
-
-    ```python
-    resource_id = "1c3ad9d4-2e91-42bc-becb-72b1fde1235c"  # Eagle
-
-    response = requests.get(
-        f"https://api.alcf.anl.gov/api/v1/filesystem/ls/{resource_id}",
-        params={"path": "/eagle/<your-project>"},
-        headers=headers
-    )
-    print(response.status_code)
-    print(response.json())
-    ```
-
-??? "Create a Directory"
-
-    Creates a new directory at the specified path. Set `parent` to `True` to create any missing parent directories.
-
-    ```python
-    resource_id = "1c3ad9d4-2e91-42bc-becb-72b1fde1235c"  # Eagle
-
-    response = requests.post(
-        f"https://api.alcf.anl.gov/api/v1/filesystem/mkdir/{resource_id}",
-        json={
-            "path": "/eagle/<your-project>/my_new_dir",
-            "parent": False
-        },
-        headers=headers
-    )
-    print(response.status_code)
-    print(response.json())
-    ```
-
-??? "View File Contents"
-
-    Returns a portion of a file starting at a given byte `offset` and reading up to `size` bytes.
-
-    ```python
-    resource_id = "1c3ad9d4-2e91-42bc-becb-72b1fde1235c"  # Eagle
-
-    response = requests.get(
-        f"https://api.alcf.anl.gov/api/v1/filesystem/view/{resource_id}",
-        params={
-            "path": "/eagle/<your-project>/file.txt",
-            "size": 10,
-            "offset": 0
-        },
-        headers=headers
-    )
-    print(response.status_code)
-    print(response.json())
-    ```
-
-??? "Read First Lines of a File"
-
-    Returns the first N `lines` of a file, similar to the Unix `head` command.
-
-    ```python
-    resource_id = "1c3ad9d4-2e91-42bc-becb-72b1fde1235c"  # Eagle
-
-    response = requests.get(
-        f"https://api.alcf.anl.gov/api/v1/filesystem/head/{resource_id}",
-        params={
-            "path": "/eagle/<your-project>/file.txt",
-            "lines": 3
-        },
-        headers=headers
-    )
-    print(response.status_code)
-    print(response.json())
-    ```
-
-??? "Change File Ownership"
-
-    Changes the `owner` and/or `group` of a file or directory.
-
-    ```python
-    resource_id = "1c3ad9d4-2e91-42bc-becb-72b1fde1235c"  # Eagle
-
-    response = requests.put(
-        f"https://api.alcf.anl.gov/api/v1/filesystem/chown/{resource_id}",
-        json={
-            "path": "/eagle/<your-project>/file.txt",
-            "owner": "<username>",
-            "group": "<group>"
-        },
-        headers=headers
-    )
-    print(response.status_code)
-    print(response.json())
-    ```
-
-??? "Change File Permissions"
-
-    Changes the permissions of a file or directory using an octal `mode` string.
-
-    ```python
-    resource_id = "1c3ad9d4-2e91-42bc-becb-72b1fde1235c"  # Eagle
-
-    response = requests.put(
-        f"https://api.alcf.anl.gov/api/v1/filesystem/chmod/{resource_id}",
-        json={
-            "path": "/eagle/<your-project>/file.txt",
-            "mode": "700"
-        },
-        headers=headers
-    )
-    print(response.status_code)
-    print(response.json())
-    ```
-
 ### Compute
 
-??? "Submit a Job"
+#### Submit a Job
 
     Submits a new job to the scheduler on the target compute resource. The `commands` block is equivalent to the body of a `qsub` script (excluding `#PBS` directives).
 
@@ -241,7 +112,7 @@ headers = {
     print(response.json())
     ```
 
-??? "List Jobs"
+#### List Jobs
 
     Returns a paginated list of jobs on the target resource. Set `historical` to `true` to include completed jobs.
 
@@ -261,7 +132,7 @@ headers = {
     print(response.json())
     ```
 
-??? "Get a Specific Job"
+#### Get a Specific Job
 
     Returns the status and details of a single job by its ID. Set `historical` to `true` if the job has already completed.
 
@@ -278,7 +149,7 @@ headers = {
     print(response.json())
     ```
 
-??? "Cancel a Job"
+#### Cancel a Job
 
     Cancels a queued or running job. Returns HTTP `204 No Content` on success.
 
@@ -299,7 +170,7 @@ headers = {
 
 ### Tasks
 
-??? "Get a Task"
+#### Get a Task
 
     Retrieves the status and result of an asynchronous task by its ID. Many Facility API operations are asynchronous and return a `task_id` that you can poll with this endpoint.
 
@@ -309,6 +180,123 @@ headers = {
 
     response = requests.get(
         f"https://api.alcf.anl.gov/api/v1/task/{task_id}",
+        headers=headers
+    )
+    print(response.status_code)
+    print(response.json())
+    ```
+
+### Filesystem
+
+**Note**: All filesystem operations are asynchronous and will return a task ID. Please see the [Get a Task](#tasks) section for how to retrieve your results.
+
+#### List Directory Contents
+
+    Returns the contents of a directory on the specified resource.
+
+    ```python
+    resource_id = "1c3ad9d4-2e91-42bc-becb-72b1fde1235c"  # Eagle
+
+    response = requests.get(
+        f"https://api.alcf.anl.gov/api/v1/filesystem/ls/{resource_id}",
+        params={"path": "/eagle/<your-project>"},
+        headers=headers
+    )
+    print(response.status_code)
+    print(response.json())
+    ```
+
+#### Create a Directory
+
+    Creates a new directory at the specified path. Set `parent` to `True` to create any missing parent directories.
+
+    ```python
+    resource_id = "1c3ad9d4-2e91-42bc-becb-72b1fde1235c"  # Eagle
+
+    response = requests.post(
+        f"https://api.alcf.anl.gov/api/v1/filesystem/mkdir/{resource_id}",
+        json={
+            "path": "/eagle/<your-project>/my_new_dir",
+            "parent": False
+        },
+        headers=headers
+    )
+    print(response.status_code)
+    print(response.json())
+    ```
+
+#### View File Contents
+
+    Returns a portion of a file starting at a given byte `offset` and reading up to `size` bytes.
+
+    ```python
+    resource_id = "1c3ad9d4-2e91-42bc-becb-72b1fde1235c"  # Eagle
+
+    response = requests.get(
+        f"https://api.alcf.anl.gov/api/v1/filesystem/view/{resource_id}",
+        params={
+            "path": "/eagle/<your-project>/file.txt",
+            "size": 10,
+            "offset": 0
+        },
+        headers=headers
+    )
+    print(response.status_code)
+    print(response.json())
+    ```
+
+#### Read First Lines of a File
+
+    Returns the first N `lines` of a file, similar to the Unix `head` command.
+
+    ```python
+    resource_id = "1c3ad9d4-2e91-42bc-becb-72b1fde1235c"  # Eagle
+
+    response = requests.get(
+        f"https://api.alcf.anl.gov/api/v1/filesystem/head/{resource_id}",
+        params={
+            "path": "/eagle/<your-project>/file.txt",
+            "lines": 3
+        },
+        headers=headers
+    )
+    print(response.status_code)
+    print(response.json())
+    ```
+
+#### Change File Ownership
+
+    Changes the `owner` and/or `group` of a file or directory.
+
+    ```python
+    resource_id = "1c3ad9d4-2e91-42bc-becb-72b1fde1235c"  # Eagle
+
+    response = requests.put(
+        f"https://api.alcf.anl.gov/api/v1/filesystem/chown/{resource_id}",
+        json={
+            "path": "/eagle/<your-project>/file.txt",
+            "owner": "<username>",
+            "group": "<group>"
+        },
+        headers=headers
+    )
+    print(response.status_code)
+    print(response.json())
+    ```
+
+#### Change File Permissions
+
+    Changes the permissions of a file or directory using an octal `mode` string.
+
+    ```python
+    resource_id = "1c3ad9d4-2e91-42bc-becb-72b1fde1235c"  # Eagle
+
+    response = requests.put(
+        f"https://api.alcf.anl.gov/api/v1/filesystem/chmod/{resource_id}",
+        json={
+            "path": "/eagle/<your-project>/file.txt",
+            "mode": "700"
+        },
         headers=headers
     )
     print(response.status_code)

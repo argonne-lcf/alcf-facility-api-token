@@ -74,6 +74,14 @@ headers = {
 }
 ```
 
+Discover available resources through the `/status/resources` endpoint.
+```python
+response = requests.get("https://api.alcf.anl.gov/api/v1/status/resources")
+
+print(response.status_code)
+print(response.json())
+```
+
 ### 1. Compute
 
 #### 1.1. Submit a Job

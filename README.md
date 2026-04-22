@@ -74,9 +74,9 @@ headers = {
 }
 ```
 
-### Compute
+### 1. Compute
 
-#### Submit a Job
+#### 1.1. Submit a Job
 
 Submits a new job to the scheduler on the target compute resource. The `commands` block is equivalent to the body of a `qsub` script (excluding `#PBS` directives).
 
@@ -110,7 +110,7 @@ print(response.status_code)
 print(response.json())
 ```
 
-#### List Jobs
+#### 1.2. List Jobs
 
 Returns a paginated list of jobs on the target resource. Set `historical` to `true` to include completed jobs.
 
@@ -130,7 +130,7 @@ print(response.status_code)
 print(response.json())
 ```
 
-#### Get a Specific Job
+#### 1.3. Get a Specific Job
 
 Returns the status and details of a single job by its ID. Set `historical` to `true` if the job has already completed.
 
@@ -147,7 +147,7 @@ print(response.status_code)
 print(response.json())
 ```
 
-#### Cancel a Job
+#### 1.4. Cancel a Job
 
 Cancels a queued or running job. Returns HTTP `204 No Content` on success.
 
@@ -166,9 +166,9 @@ else:
     print(response.json())
 ```
 
-### Tasks
+### 2. Tasks
 
-#### Get a Task
+#### 2.1. Get a Task
 
 Retrieves the status and result of an asynchronous task by its ID. Many Facility API operations are asynchronous and return a `task_id` that you can poll with this endpoint.
 
@@ -184,11 +184,11 @@ print(response.status_code)
 print(response.json())
 ```
 
-### Filesystem
+### 3. Filesystem
 
 **Note**: All filesystem operations are asynchronous and will return a task ID. Please see the [Get a Task](#tasks) section for how to retrieve your results.
 
-#### List Directory Contents
+#### 3.1. List Directory Contents
 
 Returns the contents of a directory on the specified resource.
 
@@ -204,7 +204,7 @@ print(response.status_code)
 print(response.json())
 ```
 
-#### Create a Directory
+#### 3.2. Create a Directory
 
 Creates a new directory at the specified path. Set `parent` to `True` to create any missing parent directories.
 
@@ -223,7 +223,7 @@ print(response.status_code)
 print(response.json())
 ```
 
-#### View File Contents
+#### 3.3. View File Contents
 
 Returns a portion of a file starting at a given byte `offset` and reading up to `size` bytes.
 
@@ -243,7 +243,7 @@ print(response.status_code)
 print(response.json())
 ```
 
-#### Read First Lines of a File
+#### 3.4. Read First Lines of a File
 
 Returns the first N `lines` of a file, similar to the Unix `head` command.
 
@@ -262,7 +262,7 @@ print(response.status_code)
 print(response.json())
 ```
 
-#### Change File Ownership
+#### 3.5. Change File Ownership
 
 Changes the `owner` and/or `group` of a file or directory.
 
@@ -282,7 +282,7 @@ print(response.status_code)
 print(response.json())
 ```
 
-#### Change File Permissions
+#### 3.6. Change File Permissions
 
 Changes the permissions of a file or directory using an octal `mode` string.
 

@@ -186,7 +186,7 @@ print("Job canceled." if response.status_code == 204 else response.json())
 
 ### 2. Filesystem
 
-**Note**: All filesystem operations are asynchronous and will return a task ID. Please see the [Get a Task](#tasks) section for how to retrieve your results.
+**Note**: All filesystem operations are asynchronous and will return a task ID. Please see the [Get a Task](#3-tasks) section for how to retrieve your results.
 
 #### 2.1. List Directory Contents
 

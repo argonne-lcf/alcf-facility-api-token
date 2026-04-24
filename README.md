@@ -1,6 +1,8 @@
 # ALCF Facility API Token
 
-This repository contains scripts and documentation to facilitate the generation of Globus access tokens for the ALCF Facility API. For access, please contact [ALCF Support](mailto:support@alcf.anl.gov).
+This repository contains scripts and documentation to facilitate the generation of Globus access tokens for the ALCF Facility API. 
+
+**For access**, please contact [ALCF Support](mailto:support@alcf.anl.gov).
 
 ## Quick Start
 

@@ -124,6 +124,11 @@ print(response.status_code)
 print(response.json())
 ```
 
+**Note**: If you want to use modules and access executables like `mpiexec`, make sure to include `l` in the `-c` argument:
+```bash
+"arguments": ["-lc", commands],
+```
+
 #### 1.2. List Jobs
 
 Returns a paginated list of jobs on the target resource. Set `historical` to `true` to include completed jobs.

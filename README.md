@@ -102,7 +102,7 @@ response = requests.post(
     f"https://api.alcf.anl.gov/api/v1/compute/job/{resource_id}",
     json={
         "executable": "/bin/bash",
-        "arguments": ["-c", commands],
+        "arguments": ["-lc", commands],
         "name": "my_job",
         "stdout_path": "/home/<username>/logs",
         "stderr_path": "/home/<username>/logs",

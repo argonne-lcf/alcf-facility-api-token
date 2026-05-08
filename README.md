@@ -8,17 +8,10 @@ This repository contains scripts and documentation to facilitate the generation 
 
 ### 1. Setup Your Environment
 
-Create and activate a Python 3 (`>=3.10.7`) virtual environment:
+Create and activate a Python 3 (`>=3.10.7`) virtual environment with dependencies:
 
 ```bash
-python3 -m venv venv
-source venv/bin/activate
-```
-
-Install dependencies:
-
-```bash
-pip install -r requirements.txt
+uv sync
 ```
 
 ### 2. Get the Helper Script
@@ -34,7 +27,7 @@ wget https://raw.githubusercontent.com/argonne-lcf/alcf-facility-api-token/refs/
 Generate the authentication flow URL with the command below. Copy-paste the URL to your browser, authenticate with your ALCF credentials, and copy-paste the resulting authorization code in your terminal.
 
 ```bash
-python alcf_facility_api_globus_token.py authenticate
+uv run -- python alcf_facility_api_globus_token.py authenticate
 ```
 
 The command above generates both an access token and a refresh token, stored at `~/.globus/app/8b84fc2d-49e9-49ea-b54d-b3a29a70cf31/alcf_facility_api_app/tokens.json`.
@@ -47,12 +40,12 @@ You can retrieve your token in several ways:
 
 **Bash**:
 ```bash
-python alcf_facility_api_globus_token.py get_access_token
+uv run -- python alcf_facility_api_globus_token.py get_access_token
 ```
 
 **Environment variable**:
 ```bash
-access_token=$(python alcf_facility_api_globus_token.py get_access_token)
+access_token=$(uv run -- python alcf_facility_api_globus_token.py get_access_token)
 ```
 
 **Python**:
@@ -362,7 +355,7 @@ GLOBUS_SERVICE_API_CLIENT_SECRET=....
 Then execute the introspection script to verify your token for any issues (e.g. `session_info`, `policy_evaluations`):
 
 ```bash
-python introspect_token.py
+uv run -- python introspect_token.py
 ```
 
 ## Contact Us

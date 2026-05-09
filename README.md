@@ -102,7 +102,7 @@ response = requests.post(
     f"https://api.alcf.anl.gov/api/v1/compute/job/{resource_id}",
     json={
         "executable": "/bin/bash",
-        "arguments": ["-c", commands],
+        "arguments": ["-lc", commands],
         "name": "my_job",
         "stdout_path": "/home/<username>/logs",
         "stderr_path": "/home/<username>/logs",
@@ -122,11 +122,6 @@ response = requests.post(
 
 print(response.status_code)
 print(response.json())
-```
-
-**Note**: If you want to use modules and access executables like `mpiexec`, make sure to include `l` in the `-c` argument:
-```bash
-"arguments": ["-lc", commands],
 ```
 
 #### 1.2. List Jobs

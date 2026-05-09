@@ -2,7 +2,7 @@
 
 This repository contains scripts and documentation to facilitate the generation of Globus access tokens for the ALCF Facility API. 
 
-**For access**, please contact [ALCF Support](mailto:support@alcf.anl.gov).
+**Access**: Currently, the ALCF IRI API is available to all ALCF users.
 
 ## Quick Start
 

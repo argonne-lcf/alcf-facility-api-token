@@ -1,8 +1,8 @@
 # ALCF Facility API Token
 
-This repository contains scripts and documentation to facilitate the generation of Globus access tokens for the ALCF Facility API. 
+This repository contains scripts to facilitate the generation of Globus access tokens for the ALCF Facility API. It also includes usage examples.
 
-**Access**: Currently, the ALCF IRI API is available to all ALCF users.
+**Access**: The ALCF IRI API is available to all ALCF users.
 
 ## Quick Start
 

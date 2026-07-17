@@ -62,8 +62,8 @@ def get_access_token():
     """
     Load existing tokens, refresh the access token if necessary,
     and return the valid access token. If there is no token stored
-    in the home directory, or if the refresh token is expired following
-    6 months of inactivity, an authentication will be triggered.
+    in the home directory, or if the refresh token is expired, 
+    an authentication will be triggered.
     """
 
     # Get authorizer object and authenticate if need be

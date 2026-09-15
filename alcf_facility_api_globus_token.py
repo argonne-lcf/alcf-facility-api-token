@@ -17,7 +17,10 @@ SCOPE_STRING = f"https://auth.globus.org/scopes/{SCOPE_CLIENT_ID}/filesystem"
 TOKENS_PATH = f"{os.path.expanduser('~')}/.globus/app/{AUTH_CLIENT_ID}/{APP_NAME}/tokens.json"
 
 # Globus authorizer parameters to point to specific identity providers
-GA_PARAMS = globus_sdk.gare.GlobusAuthorizationParameters(session_required_policies=["a128e981-c9a5-417a-97ab-8571c9831bff"])
+GA_PARAMS = globus_sdk.gare.GlobusAuthorizationParameters(
+    session_required_policies=["a128e981-c9a5-417a-97ab-8571c9831bff"],
+    prompt="login",
+)
 
 
 # Error handler to guide user through specific identity providers 
